@@ -1,0 +1,29 @@
+{
+  "name": "valentines-questionnaire-backend",
+  "version": "1.2.26",
+  "description": "Backend for Questionnaire signage app. Served at /questionnaire under games.wedoeffects.co.uk.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "start:subpath": "BASE_PATH=/questionnaire node server.js",
+    "dev": "nodemon server.js",
+    "dev:subpath": "BASE_PATH=/questionnaire nodemon server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "google-auth-library": "^10.5.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.11.3",
+    "qrcode": "^1.5.3",
+    "uuid": "^9.0.1",
+    "ws": "^8.16.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

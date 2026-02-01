@@ -1,0 +1,28 @@
+{
+  "name": "valentines-questionnaire",
+  "version": "1.0.0",
+  "description": "Questionnaire signage app with configurable instances. Valentine's theme included as default. Served at /questionnaire under games.wedoeffects.co.uk.",
+  "main": "backend/server.js",
+  "homepage": "https://games.wedoeffects.co.uk/questionnaire",
+  "scripts": {
+    "db:up": "docker compose -f docker-compose.db.yml up -d",
+    "db:down": "docker compose -f docker-compose.db.yml down",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:mobile\" \"npm run dev:signage\" \"npm run dev:admin\"",
+    "dev:backend": "cd backend && nodemon server.js",
+    "dev:backend:subpath": "cd backend && BASE_PATH=/questionnaire nodemon server.js",
+    "dev:mobile": "cd mobile-form && npm run dev",
+    "dev:signage": "cd signage-display && npm run dev",
+    "dev:admin": "cd admin-dashboard && npm run dev",
+    "install:all": "npm install && cd backend && npm install && cd ../mobile-form && npm install && cd ../signage-display && npm install && cd ../admin-dashboard && npm install",
+    "build": "cd mobile-form && npm run build && cd ../signage-display && npm run build && cd ../admin-dashboard && npm run build",
+    "start": "cd backend && BASE_PATH=/questionnaire node server.js",
+    "start:pm2": "pm2 start ecosystem.config.js"
+  },
+  "keywords": ["signage", "questionnaire", "valentines", "games.wedoeffects", "qr"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2"
+  }
+}
