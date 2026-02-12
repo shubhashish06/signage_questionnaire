@@ -89,7 +89,9 @@ function QuestionnaireConfigManager({ signageId, signageInfo, onUpdate }) {
   };
 
   const addResultBand = () => {
+    const defaultStartId = activeGender || initialOptions[0]?.id || '';
     setResultBands([...resultBands, {
+      start_id: defaultStartId,
       min_score: 0,
       max_score: 4,
       signage: { emoji: '💕', message: 'Thank you!', subtext: '' },
@@ -270,7 +272,17 @@ function QuestionnaireConfigManager({ signageId, signageInfo, onUpdate }) {
         <div className="space-y-4">
           {resultBands.map((b, idx) => (
             <div key={idx} className="p-4 bg-white rounded-lg border border-gray-200 space-y-3">
-              <div className="flex gap-2 items-center">
+              <div className="flex flex-wrap gap-2 items-center">
+                <select
+                  value={b.start_id ?? ''}
+                  onChange={e => updateResultBand(idx, 'start_id', e.target.value)}
+                  className="px-3 py-2 border border-gray-200 rounded text-sm"
+                >
+                  <option value="">All start options</option>
+                  {initialOptions.map(opt => (
+                    <option key={opt.id} value={opt.id}>{opt.label}</option>
+                  ))}
+                </select>
                 <input type="number" min={0} value={b.min_score ?? 0} onChange={e => updateResultBand(idx, 'min_score', parseInt(e.target.value) || 0)} inputMode="numeric" placeholder="Min score" className="w-24 px-3 py-2 border border-gray-200 rounded" />
                 <span className="text-gray-500">–</span>
                 <input type="number" min={0} value={b.max_score ?? 999} onChange={e => updateResultBand(idx, 'max_score', parseInt(e.target.value) || 999)} inputMode="numeric" placeholder="Max score" className="w-24 px-3 py-2 border border-gray-200 rounded" />

@@ -133,8 +133,13 @@ export async function submitQuestionnaire(req, res) {
     signage: { emoji: defaultMobile.emoji, message: 'Thank you!', subtext: '' },
     mobile: { emoji: defaultMobile.emoji, heading: defaultMobile.heading, message: defaultMobile.message }
   };
-  let band = resultBands.find(b => totalPoints >= (b.min_score ?? 0) && totalPoints <= (b.max_score ?? 999))
-    || resultBands[0]
+
+  // Prefer result bands specific to the selected start option (gender), fall back to global bands
+  const bandsForGender = resultBands.filter(b => !b.start_id || b.start_id === gender);
+  const bandsToUse = bandsForGender.length > 0 ? bandsForGender : resultBands;
+
+  let band = bandsToUse.find(b => totalPoints >= (b.min_score ?? 0) && totalPoints <= (b.max_score ?? 999))
+    || bandsToUse[0]
     || defaultBand;
 
   // Avoid redundant heading+message: if both say "Thank you" (any variant), clear message
