@@ -1,6 +1,6 @@
 module.exports = {
   apps: [{
-    name: 'valentines-backend',
+    name: 'questionnaire-backend',
     script: './backend/server.js',
     cwd: __dirname,
     instances: 1,

@@ -81,7 +81,7 @@ Ensure your EC2 security group allows:
 - **SSH (22)**: From your IP
 - **HTTP (80)**: From anywhere (0.0.0.0/0)
 - **HTTPS (443)**: From anywhere (0.0.0.0/0)
-- **Custom TCP (3001)**: From anywhere (for API access, or restrict to ALB)
+- **Custom TCP (3002)**: From anywhere (for API access, or restrict to ALB)
 
 ## Step 3: Set Up EC2 Instance
 
@@ -231,7 +231,7 @@ pm2 startup
 ### Create Nginx Configuration
 
 ```bash
-sudo nano /etc/nginx/sites-available/valentines
+sudo nano /etc/nginx/sites-available/questionnaire
 ```
 
 See `nginx.conf` file (will be created below)
@@ -239,7 +239,7 @@ See `nginx.conf` file (will be created below)
 ### Enable Site
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/valentines /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/questionnaire /etc/nginx/sites-enabled/
 sudo nginx -t  # Test configuration
 sudo systemctl restart nginx
 ```
@@ -272,7 +272,7 @@ After deployment, you need to create your first instance:
 
 1. **Access Superadmin**:
    ```
-   https://yourdomain.com/superadmin
+   https://yourdomain.com/questionnaire/superadmin
    ```
 
 2. **Create Instance**:
@@ -282,7 +282,7 @@ After deployment, you need to create your first instance:
    - Click "Create Instance"
 
 3. **Configure Instance**:
-   - Go to: `https://yourdomain.com/admin?id=DEFAULT`
+   - Go to: `https://yourdomain.com/questionnaire/admin?id=DEFAULT`
    - Customize outcomes, background, etc.
    - Test the game flow
 
@@ -314,7 +314,7 @@ pm2 set pm2-logrotate:retain 7
 ### Update Application
 
 ```bash
-cd ~/valentines
+cd ~/questionnaire
 git pull  # If using git
 npm run install:all
 npm run build
@@ -332,7 +332,7 @@ sudo tail -f /var/log/nginx/access.log
 sudo tail -f /var/log/nginx/error.log
 
 # Application logs
-pm2 logs valentines-backend
+pm2 logs questionnaire-backend
 ```
 
 ### Backup Database
@@ -346,9 +346,9 @@ Add:
 ```bash
 #!/bin/bash
 DATE=$(date +%Y%m%d_%H%M%S)
-pg_dump -h YOUR_RDS_ENDPOINT -U postgres -d valentines > ~/backups/valentines_$DATE.sql
+pg_dump -h YOUR_RDS_ENDPOINT -U postgres -d questionnaire > ~/backups/questionnaire_$DATE.sql
 # Upload to S3 (optional)
-aws s3 cp ~/backups/valentines_$DATE.sql s3://your-backup-bucket/
+aws s3 cp ~/backups/questionnaire_$DATE.sql s3://your-backup-bucket/
 ```
 
 ## Security Best Practices
@@ -378,10 +378,10 @@ pm2 status
 pm2 logs
 
 # Check if port is in use
-sudo netstat -tulpn | grep 3001
+sudo netstat -tulpn | grep 3002
 
 # Check environment variables
-cd ~/valentines/backend
+cd ~/questionnaire/backend
 cat .env
 ```
 
@@ -389,7 +389,7 @@ cat .env
 
 ```bash
 # Test connection from EC2
-psql -h YOUR_RDS_ENDPOINT -U postgres -d valentines
+psql -h YOUR_RDS_ENDPOINT -U postgres -d questionnaire
 
 # Check security group rules
 # Ensure EC2 security group can access RDS security group

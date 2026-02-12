@@ -39,30 +39,31 @@ This installs:
 **Option A: Using Git**
 ```bash
 cd ~
-git clone YOUR_REPO_URL valentines
-cd valentines
+git clone YOUR_REPO_URL questionnaire
+cd questionnaire
 ```
 
 **Option B: Using SCP (from your local machine)**
 ```bash
-scp -i your-key.pem -r . ubuntu@YOUR_EC2_IP:~/valentines/
+scp -i your-key.pem -r . ubuntu@YOUR_EC2_IP:~/questionnaire/
 ```
 
 ### 4. Configure Environment
 
 ```bash
-cd ~/valentines/backend
+cd ~/questionnaire/backend
 cp .env.example .env
 nano .env
 ```
 
 Update with your RDS credentials:
 ```env
-PORT=3001
+PORT=3002
+BASE_PATH=/questionnaire
 NODE_ENV=production
 DB_HOST=your-rds-endpoint.xxxxx.us-east-1.rds.amazonaws.com
 DB_PORT=5432
-DB_NAME=valentines
+DB_NAME=questionnaire
 DB_USER=postgres
 DB_PASSWORD=your-secure-password
 DATABASE_SSL=true
@@ -72,7 +73,7 @@ SESSION_SECRET=$(openssl rand -hex 32)
 ### 5. Deploy
 
 ```bash
-cd ~/valentines
+cd ~/questionnaire
 chmod +x deploy-aws.sh
 ./deploy-aws.sh
 ```
@@ -91,9 +92,9 @@ This will:
 
 2. **Update Nginx Config**
    ```bash
-   sudo nano /etc/nginx/sites-available/valentines
+   sudo nano /etc/nginx/sites-available/questionnaire
    # Replace 'yourdomain.com' with your actual domain
-   sudo ln -s /etc/nginx/sites-available/valentines /etc/nginx/sites-enabled/
+   sudo ln -s /etc/nginx/sites-available/questionnaire /etc/nginx/sites-enabled/
    sudo nginx -t
    sudo systemctl restart nginx
    ```
@@ -141,7 +142,7 @@ After deployment, verify all URLs work:
 ### Database Connection Failed
 - Check RDS security group allows EC2 security group
 - Verify credentials in `.env`
-- Test: `psql -h RDS_ENDPOINT -U postgres -d valentines`
+- Test: `psql -h RDS_ENDPOINT -U postgres -d questionnaire`
 
 ### 502 Bad Gateway
 - Check PM2: `pm2 status`

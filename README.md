@@ -25,7 +25,7 @@ Copy `backend/.env.example` to `backend/.env`:
 cp backend/.env.example backend/.env
 ```
 
-Default: `DATABASE_URL=postgresql://postgres:postgres@localhost:5433/valentines` (port 5433 to avoid conflict with other PostgreSQL on 5432)
+Default: `DATABASE_URL=postgresql://postgres:postgres@localhost:5433/questionnaire` (port 5433 to avoid conflict with other PostgreSQL on 5432)
 
 ### 3. Install & Run
 

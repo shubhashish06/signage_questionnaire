@@ -13,12 +13,12 @@ npm run install:all
 Make sure PostgreSQL is running and create a database:
 
 ```bash
-createdb valentines
+createdb questionnaire
 ```
 
 Or using psql:
 ```sql
-CREATE DATABASE valentines;
+CREATE DATABASE questionnaire;
 ```
 
 ## Step 3: Configure Environment
@@ -26,10 +26,11 @@ CREATE DATABASE valentines;
 Create `backend/.env` file:
 
 ```env
-PORT=3001
+PORT=3002
+BASE_PATH=/questionnaire
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=valentines
+DB_NAME=questionnaire
 DB_USER=postgres
 DB_PASSWORD=postgres
 DATABASE_SSL=false
@@ -123,7 +124,7 @@ npm start
 ### Database Connection Error
 - Verify PostgreSQL is running: `pg_isready`
 - Check DATABASE_URL in `.env` matches your setup
-- Ensure database exists: `psql -l | grep valentines`
+- Ensure database exists: `psql -l | grep questionnaire`
 
 ### WebSocket Connection Failed
 - Check backend server is running on port 3001

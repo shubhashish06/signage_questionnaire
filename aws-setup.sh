@@ -74,8 +74,8 @@ fi
 
 # Create application directory
 echo -e "${YELLOW}📁 Creating application directory...${NC}"
-mkdir -p ~/valentines
-mkdir -p ~/valentines/logs
+mkdir -p ~/questionnaire
+mkdir -p ~/questionnaire/logs
 mkdir -p ~/backups
 
 # Set up firewall (UFW)
@@ -93,9 +93,9 @@ echo ""
 echo "Your EC2 Public IP: $PUBLIC_IP"
 echo ""
 echo "Next steps:"
-echo "1. Clone or upload your project to ~/valentines"
-echo "2. Configure .env file in ~/valentines/backend/.env"
-echo "3. Run: cd ~/valentines && bash deploy-aws.sh"
+echo "1. Clone or upload your project to ~/questionnaire"
+echo "2. Configure .env file in ~/questionnaire/backend/.env"
+echo "3. Run: cd ~/questionnaire && bash deploy-aws.sh"
 echo ""
 echo "To test locally:"
-echo "  curl http://localhost:3001/api/signage/DEFAULT"
+echo "  curl http://localhost:3002/questionnaire/api/signage/DEFAULT"

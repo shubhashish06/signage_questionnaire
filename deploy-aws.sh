@@ -40,7 +40,7 @@ if ! command -v nginx &> /dev/null; then
 fi
 
 # Navigate to project directory
-PROJECT_DIR="$HOME/valentines"
+PROJECT_DIR="$HOME/questionnaire"
 if [ ! -d "$PROJECT_DIR" ]; then
     echo -e "${RED}❌ Project directory not found at $PROJECT_DIR${NC}"
     echo "Please clone or upload your project first."
