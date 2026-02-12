@@ -67,7 +67,7 @@ NODE_ENV=production
 # Database Configuration (RDS)
 DB_HOST=your-rds-endpoint.xxxxx.us-east-1.rds.amazonaws.com
 DB_PORT=5432
-DB_NAME=valentines
+DB_NAME=questionnaire
 DB_USER=postgres
 DB_PASSWORD=your-secure-password
 DATABASE_SSL=true

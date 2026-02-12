@@ -17,7 +17,7 @@ if (process.env.DATABASE_URL && process.env.DATABASE_URL.trim() !== '') {
     poolConfig = {
       host: process.env.DB_HOST || 'localhost',
       port: parseInt(process.env.DB_PORT) || 5432,
-      database: process.env.DB_NAME || 'valentines',
+      database: process.env.DB_NAME || 'questionnaire',
       user: process.env.DB_USER || 'postgres',
       password: process.env.DB_PASSWORD || 'postgres',
       ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : false
@@ -27,7 +27,7 @@ if (process.env.DATABASE_URL && process.env.DATABASE_URL.trim() !== '') {
   poolConfig = {
     host: process.env.DB_HOST || 'localhost',
     port: parseInt(process.env.DB_PORT) || 5432,
-    database: process.env.DB_NAME || 'valentines',
+    database: process.env.DB_NAME || 'questionnaire',
     user: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASSWORD || 'postgres',
     ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : false

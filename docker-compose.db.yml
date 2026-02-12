@@ -5,15 +5,15 @@
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: valentines-db
+    container_name: questionnaire-db
     environment:
-      POSTGRES_DB: valentines
+      POSTGRES_DB: questionnaire
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
       - "5433:5432"
     volumes:
-      - valentines_postgres_data:/var/lib/postgresql/data
+      - questionnaire_postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -21,4 +21,4 @@ services:
       retries: 5
 
 volumes:
-  valentines_postgres_data:
+  questionnaire_postgres_data:

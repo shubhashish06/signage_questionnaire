@@ -36,7 +36,7 @@ Complete guide for deploying the Questionnaire signage application on AWS.
    - **Engine**: PostgreSQL
    - **Version**: 14.x or 15.x
    - **Template**: Free tier (dev) or Production
-   - **DB Instance Identifier**: `valentines-db`
+   - **DB Instance Identifier**: `questionnaire-db`
    - **Master Username**: `postgres` (or your choice)
    - **Master Password**: Set a strong password
    - **DB Instance Class**: db.t3.micro (dev) or db.t3.small (prod)
@@ -44,9 +44,9 @@ Complete guide for deploying the Questionnaire signage application on AWS.
    - **VPC**: Default or your VPC
    - **Public Access**: Yes (or configure VPC security groups)
    - **Security Group**: Create new or use existing
-   - **Database Name**: `valentines`
+   - **Database Name**: `questionnaire`
 
-4. Note the **Endpoint** URL (e.g., `valentines-db.xxxxx.us-east-1.rds.amazonaws.com`)
+4. Note the **Endpoint** URL (e.g., `questionnaire-db.xxxxx.us-east-1.rds.amazonaws.com`)
 
 ### Configure Security Group
 
@@ -63,7 +63,7 @@ Complete guide for deploying the Questionnaire signage application on AWS.
 
 1. Go to EC2 Console → Launch Instance
 2. Configure:
-   - **Name**: `valentines-server`
+   - **Name**: `questionnaire-server`
    - **AMI**: Ubuntu Server 22.04 LTS
    - **Instance Type**: t3.small (or larger)
    - **Key Pair**: Select or create new
@@ -115,18 +115,18 @@ sudo apt install -y git
 
 ```bash
 # Clone your repository (or upload files)
-git clone YOUR_REPO_URL valentines
-cd valentines
+git clone YOUR_REPO_URL questionnaire
+cd questionnaire
 
 # Or if uploading manually, create directory and upload files
-mkdir -p ~/valentines
+mkdir -p ~/questionnaire
 # Upload files via SCP or use AWS CodeDeploy
 ```
 
 ### Install Application Dependencies
 
 ```bash
-cd ~/valentines
+cd ~/questionnaire
 npm run install:all
 ```
 
@@ -135,7 +135,7 @@ npm run install:all
 ### Create Production .env File
 
 ```bash
-cd ~/valentines/backend
+cd ~/questionnaire/backend
 
 nano .env
 ```
@@ -143,30 +143,36 @@ nano .env
 Add the following (replace with your actual values):
 
 ```env
-
 # Server Configuration
-PORT=3001
+PORT=3002
+BASE_PATH=/questionnaire
 NODE_ENV=production
+
+# SuperAdmin (required for /superadmin)
+SUPERADMIN_EMAIL=admin@yourdomain.com
+SUPERADMIN_PASSWORD=your-secure-password
+JWT_SECRET=your-jwt-secret-change-in-production
 
 # Database Configuration (RDS)
 DB_HOST=your-rds-endpoint.xxxxx.us-east-1.rds.amazonaws.com
 DB_PORT=5432
-DB_NAME=valentines
+DB_NAME=questionnaire
 DB_USER=postgres
 DB_PASSWORD=your-secure-password
 
 # Or use DATABASE_URL
-# DATABASE_URL=postgresql://postgres:password@your-rds-endpoint:5432/valentines
+# DATABASE_URL=postgresql://postgres:password@your-rds-endpoint:5432/questionnaire
 DATABASE_SSL=true
 
-# Optional: Session secret for future use
-SESSION_SECRET=your-random-secret-key-here
+# Optional: Google OAuth for admin "Sign in with Google"
+# GOOGLE_CLIENT_ID=
+# GOOGLE_CLIENT_SECRET=
 ```
 
 ### Test Database Connection
 
 ```bash
-cd ~/valentines/backend
+cd ~/questionnaire/backend
 node -r dotenv/config -e "
 import('pg').then(({ default: pg }) => {
   const pool = new pg.Pool({
@@ -191,7 +197,7 @@ import('pg').then(({ default: pg }) => {
 ## Step 5: Build Frontend Applications
 
 ```bash
-cd ~/valentines
+cd ~/questionnaire
 npm run build
 ```
 
@@ -205,7 +211,7 @@ This will build:
 ### Create PM2 Ecosystem File
 
 ```bash
-cd ~/valentines
+cd ~/questionnaire
 nano ecosystem.config.js
 ```
 
@@ -252,11 +258,13 @@ sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 
 ## Step 9: Verify Deployment
 
-1. **Test API**: `https://yourdomain.com/api/signage/DEFAULT`
-2. **Test Superadmin**: `https://yourdomain.com/superadmin`
-3. **Test Instance Admin**: `https://yourdomain.com/admin?id=DEFAULT`
-4. **Test Mobile Form**: `https://yourdomain.com/play/?id=DEFAULT`
-5. **Test Signage Display**: `https://yourdomain.com/signage?id=DEFAULT`
+If deployed at `https://games.wedoeffects.co.uk/questionnaire` (or your domain with `BASE_PATH=/questionnaire`):
+
+1. **Test API**: `https://yourdomain.com/questionnaire/api/signage/DEFAULT`
+2. **Test Superadmin**: `https://yourdomain.com/questionnaire/superadmin`
+3. **Test Instance Admin**: `https://yourdomain.com/questionnaire/admin?id=DEFAULT`
+4. **Test Mobile Form**: `https://yourdomain.com/questionnaire/play/?id=DEFAULT`
+5. **Test Signage Display**: `https://yourdomain.com/questionnaire/signage?id=DEFAULT`
 
 ## Step 10: Create First Instance
 

@@ -91,7 +91,7 @@ initDatabase().then(() => {
 }).catch(err => {
   console.error('⚠️  Database initialization failed:', err.message);
   console.error('⚠️  Server will start but database features will be unavailable');
-  console.error('⚠️  To fix: Install PostgreSQL and create database "valentines"');
+  console.error('⚠️  To fix: Install PostgreSQL and create database "questionnaire"');
 });
 
 // Start server regardless of database status

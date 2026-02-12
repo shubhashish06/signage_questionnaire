@@ -4,9 +4,9 @@
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: valentines-db
+    container_name: questionnaire-db
     environment:
-      POSTGRES_DB: valentines
+      POSTGRES_DB: questionnaire
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
@@ -23,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: valentines-app
+    container_name: questionnaire-app
     ports:
       - "3002:3002"
     environment:
@@ -31,7 +31,7 @@ services:
       PORT: 3002
       DB_HOST: postgres
       DB_PORT: 5432
-      DB_NAME: valentines
+      DB_NAME: questionnaire
       DB_USER: postgres
       DB_PASSWORD: postgres
       DATABASE_SSL: false
